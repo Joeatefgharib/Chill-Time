@@ -14,7 +14,7 @@ const WatchSeriesPage = () => {
   const [seriesData, setSeriesData] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/series/${id}`)
+      .get(`https://msociety.onrender.com/api/series/${id}`)
       .then((response) => {
         console.log(response.data);
         setSeriesData(response.data);

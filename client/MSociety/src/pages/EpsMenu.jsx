@@ -19,7 +19,7 @@ const EpsMenu = () => {
 
     const [seriesData, setSeriesData] = useState([]);
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/series/${id}`)
+        axios.get(`https://msociety.onrender.com/api/series/${id}`)
             .then(response => {
                 console.log(response.data)
                 setSeriesData(response.data);
@@ -32,7 +32,7 @@ const EpsMenu = () => {
     const [episodesData, setEpisodesData] = useState([])
     useEffect(() => {
         if (activeSeason) {
-            axios.get(`http://localhost:5000/api/series/${id}/${activeSeason}/episodes`)
+            axios.get(`https://msociety.onrender.com/api/series/${id}/${activeSeason}/episodes`)
               .then(response => {
                 setEpisodesData(response.data);
               })
@@ -44,7 +44,7 @@ const EpsMenu = () => {
 
     const [seasonData, setSeasonData] = useState([])
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/series/${id}/seasons`)
+        axios.get(`https://msociety.onrender.com/api/series/${id}/seasons`)
             .then(response => {
                 console.log(response.data)
                 setSeasonData(response.data);

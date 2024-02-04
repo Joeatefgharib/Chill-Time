@@ -12,7 +12,7 @@ const WatchMoviePage = () => {
     const {id} = useParams()
     const [movieData, setMovieData] = useState([]);
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/movies/${id}`)
+        axios.get(`https://msociety.onrender.com/api/movies/${id}`)
             .then(response => {
                 console.log(response.data)
                 setMovieData(response.data);

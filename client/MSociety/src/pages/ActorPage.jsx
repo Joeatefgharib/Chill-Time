@@ -16,23 +16,23 @@ const ActorPage = () => {
     const [seriesData, setSeriesData] = useState([])
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/actors/${id}`)
+        axios.get(`https://msociety.onrender.com/api/actors/${id}`)
         .then(response => {
             setActorData(response.data);
 
-            axios.get(`http://localhost:5000/api/actors/${id}/relatedMovies`)
+            axios.get(`https://msociety.onrender.com/api/actors/${id}/relatedMovies`)
             .then(async response => {
                 const moviesData = await Promise.all(response.data.map(async movieId => {
-                    const movieResponse = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
+                    const movieResponse = await axios.get(`https://msociety.onrender.com/api/movies/${movieId}`);
                     console.log(movieResponse.data)
                     return movieResponse.data;
             }));
                 setMovieData(moviesData); // Update movieData state with movie details
             })
-            axios.get(`http://localhost:5000/api/actors/${id}/relatedSeries`)
+            axios.get(`https://msociety.onrender.com/api/actors/${id}/relatedSeries`)
             .then(async response => {
                 const seriesData = await Promise.all(response.data.map(async SeriesId => {
-                    const SeriesResponse = await axios.get(`http://localhost:5000/api/series/${SeriesId}`);
+                    const SeriesResponse = await axios.get(`https://msociety.onrender.com/api/series/${SeriesId}`);
                     console.log(SeriesResponse.data)
                     return SeriesResponse.data;
             }));
