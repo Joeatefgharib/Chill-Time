@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSociety</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        .menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 100%;
+            background-color: black;
+            padding-top: 60px;
+            transition: 0.5s;
+        }
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .menu li {
+            padding: 15px;
+            text-align: center;
+        }
+        .menu a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-bottom: 1px solid #555;
+        }
+        .form-container {
+            margin-right: 220px; /* Adjust as needed based on your menu width */
+            padding: 20px;
+            text-align: right;
+        }
+        form {
+            direction: rtl;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="sideMenu" class="menu">
+        <ul>
+            <li><a href="addmovie">افلام</a></li>
+            <li><a href="addseries">مسلسلات</a></li>
+            <li><a href="addactor">ممثلين</a></li>
+            <li><a href="adddirector">مخرجين</a></li>
+        </ul>
+    </div>
+    <div class="form-container">
+        <h2>أضافة مسلسل</h2>
+        <form action="/addseries" method="post" enctype="multipart/form-data">
+            <label for="id">ID</label>
+            <input type="text" id="id" name="id" required>
+            <label for="title">عنوان المسلسل:</label>
+            <input type="text" id="title" name="title" required>
+            <br>
+            <label for="genre">نوع المسلسل:</label>
+            <input type="text" id="genre" name="genre" required>
+            <br>
+            <label for="year">تاريخ الإصدار:</label>
+            <input type="text" id="year" name="year" required>
+            <br>
+            <label for="description">وصف المسلسل:</label>
+            <input type="text" id="description" name="description" required></input>
+            <br>
+            <h3>الحلقات:</h3>
+            <div id="episodes-container">
+                <div class="episode-item">
+                    <label for="episodeTitle1">عنوان الحلقة:</label>
+                    <input type="text" id="episodeTitle1" name="episodeTitles[]" required>
+                    <br>
+                    <label for="episodeNumber1">رقم الحلقة:</label>
+                    <input type="text" id="episodeNumber1" name="episodeNumbers[]" required>
+                    <br>
+                    <label for="episodeFile1">لينك الحلقة:</label>
+                    <input id="episodeFile1" name="episodeFiles[]" required></input>
+                    <br>
+                </div>
+            </div>
+            <button type="button" onclick="addEpisodeItem()">إضافة حلقة</button>
+            <br>
+            <label for="poster" style="padding-top: 14px;">لينك بوستر المسلسل:</label>
+            <input type="text" id="poster" name="poster" accept="image/*" required>
+            <br>
+            <button type="submit">إضافة المسلسل</button>
+        </form>
+    </div>
+    <script>
+        function addEpisodeItem() {
+            const episodesContainer = document.getElementById('episodes-container');
+            const newEpisodeItem = document.createElement('div');
+            newEpisodeItem.classList.add('episode-item');
+    
+            const createLabelAndInput = (labelText, inputType, inputName) => {
+                const label = document.createElement('label');
+                label.textContent = labelText;
+                newEpisodeItem.appendChild(label);
+    
+                const input = document.createElement(inputType === 'textarea' ? 'textarea' : 'input');
+                input.type = inputType;
+                input.name = inputName;
+                input.required = true;
+    
+                newEpisodeItem.appendChild(input);
+                newEpisodeItem.appendChild(document.createElement('br'));
+            };
+    
+            createLabelAndInput('عنوان الحلقة:', 'text', 'episodeTitles[]');
+            createLabelAndInput('رقم الحلقة:', 'number', 'episodeNumbers[]');
+            createLabelAndInput('لينك الحلقة:', 'textarea', 'episodeFiles[]');
+    
+            episodesContainer.appendChild(newEpisodeItem);
+        }
+    </script>
+</body>
+</html>

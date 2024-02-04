@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        .menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 100%;
+            background-color: black;
+            padding-top: 60px;
+            transition: 0.5s;
+        }
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .menu li {
+            padding: 15px;
+            text-align: center;
+        }
+        .menu a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-bottom: 1px solid #555;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="sideMenu" class="menu">
+        <ul>
+            <li><a href="addmovie">افلام</a></li>
+            <li><a href="addseries">مسلسلات</a></li>
+            <li><a href="addactor">ممثلين</a></li>
+            <li><a href="adddirector">مخرجين</a></li>
+        </ul>
+    </div>
+</body>
+</html>

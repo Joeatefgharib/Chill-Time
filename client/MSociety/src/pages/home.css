@@ -1,0 +1,10 @@
+  .swiper-rtl .swiper-button-next:after {
+    color: var(--primary);
+    margin-left: 30px;
+  }
+  .swiper-button-next,
+  .swiper-rtl .swiper-button-prev {
+    color: var(--primary);
+    margin-right: 30px;
+  }
+
