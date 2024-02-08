@@ -23,7 +23,7 @@ function App() {
           <Route path={'movie/:id/watch/:type'} element={<WatchMoviePage />} />
           <Route path={'series/:id'} element={<SeriesPage />}/>
           <Route path={'series/:id/:seasonNumber/episodes'} element={<EpsMenu />} />
-          <Route path={'series/:id/:seasonNumber/:ep/watch'} element={<WatchSeriesPage />} />
+          <Route path={'series/:id/:seasonNumber/:ep/watch/:type'} element={<WatchSeriesPage />} />
           <Route path={'actors/:id'} element={<ActorPage />} />
           <Route path={'search/:id'} element={<SearchPage />} />
       </Routes>

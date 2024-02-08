@@ -32,8 +32,13 @@ const seriesSchema = new mongoose.Schema({
         episodes: [{
           episodeNumber: { type: String, required: true,  }, 
           title: { type: String, required: true }, 
-          runtime: { type: Number, optional: true }, 
-          episodeLink: {type: String, required: true},
+          img: { type: String, required: true }, 
+          qualities: [
+            {
+              type: { type: String, required: true }, // Quality type (e.g., HD, SD, 4K)
+              link: { type: String, required: true }, // Link to the movie for this quality
+            }
+          ],
             }
         ],
         seasonPoster: {

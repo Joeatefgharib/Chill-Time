@@ -133,6 +133,44 @@ app.get("/api/movies/:id/qualities/:type", async function (req, res) {
   }
 });
 
+app.get("/api/series/:id/qualities", async function (req, res) {
+  try {
+    const series = await Series.findById(req.params.id);
+    res.send(series.qualities);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving series  data");
+  }
+});
+
+app.get("/api/movies/:id/qualities/:type", async function (req, res) {
+  try {
+    // Find the movie by ID
+    const movie = await Movie.findById(req.params.id);
+
+    // If movie is not found, return 404 Not Found status
+    if (!movie) {
+      return res.status(404).send("Movie not found");
+    }
+
+    // Get the quality type from the request parameters
+    const qualityType = req.params.type;
+
+    // Find the quality object based on the type
+    const quality = movie.qualities.find(q => q.type === qualityType);
+
+    // If quality is not found, return 404 Not Found status
+    if (!quality) {
+      return res.status(404).send("Quality not found for this movie");
+    }
+
+    // Send the quality object
+    res.send(quality);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving movie quality data");
+  }
+});
 
 app.get("/api/series/:id", async function (req, res) {
   try {
@@ -205,9 +243,16 @@ app.get("/api/series/:id/:seasonNumber/:ep", async function (req, res) {
   try {
     const series = await Series.findById(req.params.id);
 
-    const targetSeason = series.seasons[req.params.seasonNumber - 1];
+    const targetSeason = series.seasons.find(
+      (season) => season.seasonNumber === req.params.seasonNumber
+    );
+
+    if (!targetSeason) {
+      return res.status(404).send("Season not found");
+    }
+
     const targetEpisode = targetSeason.episodes.find(
-      (episode) => episode.episodeNumber === parseInt(req.params.ep)
+      (episode) => episode.episodeNumber === req.params.ep
     );
 
     if (targetEpisode) {
@@ -217,7 +262,36 @@ app.get("/api/series/:id/:seasonNumber/:ep", async function (req, res) {
     }
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error retrieving movie data");
+    res.status(500).send("Error retrieving series data");
+  }
+});
+
+app.get("/api/series/:id/:seasonNumber/:ep/qualities", async function (req, res) {
+  try {
+    const series = await Series.findById(req.params.id);
+
+    const targetSeason = series.seasons.find(
+      (season) => season.seasonNumber === req.params.seasonNumber
+    );
+
+    if (!targetSeason) {
+      return res.status(404).send("Season not found");
+    }
+
+    const targetEpisode = targetSeason.episodes.find(
+      (episode) => episode.episodeNumber === req.params.ep
+    );
+
+    if (!targetEpisode) {
+      return res.status(404).send("Episode not found");
+    }
+
+    const qualities = targetEpisode.qualities;
+
+    res.send(qualities);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving qualities data");
   }
 });
 
