@@ -94,6 +94,46 @@ app.get("/api/movies/:id/actors", async function (req, res) {
   }
 });
 
+app.get("/api/movies/:id/qualities", async function (req, res) {
+  try {
+    const movie = await Movie.findById(req.params.id);
+    res.send(movie.qualities);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving movie actors data");
+  }
+});
+
+app.get("/api/movies/:id/qualities/:type", async function (req, res) {
+  try {
+    // Find the movie by ID
+    const movie = await Movie.findById(req.params.id);
+
+    // If movie is not found, return 404 Not Found status
+    if (!movie) {
+      return res.status(404).send("Movie not found");
+    }
+
+    // Get the quality type from the request parameters
+    const qualityType = req.params.type;
+
+    // Find the quality object based on the type
+    const quality = movie.qualities.find(q => q.type === qualityType);
+
+    // If quality is not found, return 404 Not Found status
+    if (!quality) {
+      return res.status(404).send("Quality not found for this movie");
+    }
+
+    // Send the quality object
+    res.send(quality);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving movie quality data");
+  }
+});
+
+
 app.get("/api/series/:id", async function (req, res) {
   try {
     const series = await Series.findById(req.params.id);
@@ -443,7 +483,7 @@ app.post("/addmovie", async (req, res) => {
       year: req.body.year,
       description: req.body.description,
       poster: req.body.poster,
-      movieLink: req.body.movieLink,
+      qualities: req.body.qualities, // Updated to include qualities array
       actors: req.body.actors,
       trending: req.body.trending,
       trendpic: req.body.trendpic
@@ -477,6 +517,7 @@ app.post("/addmovie", async (req, res) => {
     res.status(500).send(`Internal Server Error: ${error}`);
   }
 });
+
 
 app.post("/addseries", async (req, res) => {
   try {

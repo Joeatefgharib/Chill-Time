@@ -10,7 +10,12 @@ const movieSchema = new mongoose.Schema({
   year: { type: String, required: true },
   description: { type: String, required: true },
   poster: { type: String, required: true },
-  movieLink: { type: String, required: true },
+  qualities: [
+    {
+      type: { type: String, required: true }, // Quality type (e.g., HD, SD, 4K)
+      link: { type: String, required: true }, // Link to the movie for this quality
+    }
+  ],
   actors: [{ type: String, ref: "Actor" }], // Reference to actors
   trending: { type: Boolean, default: false },
   trendpic: {type: String, required:false}
