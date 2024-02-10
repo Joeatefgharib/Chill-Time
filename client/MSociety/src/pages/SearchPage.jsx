@@ -13,7 +13,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://msociety.onrender.com/api/search/${id}`)
+      .get(`http://localhost:5000/api/search/${id}`)
       .then((response) => {
         setSearchData(response.data);
         setMovies(response.data.movies);

@@ -9,13 +9,13 @@ const Movies = () => {
   const [selectedGenre, setSelectedGenre] = useState("allGenres");
 
   useEffect(() => {
-    axios.get("https://msociety.onrender.com/api/movies").then((res) => {
+    axios.get("http://localhost:5000/api/movies").then((res) => {
       setMovieData(res.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get("https://msociety.onrender.com/api/genre").then((res) => {
+    axios.get("http://localhost:5000/api/genre").then((res) => {
       setGenreData(res.data);
     });
   }, []);
@@ -23,11 +23,11 @@ const Movies = () => {
   useEffect(() => {
     if (selectedGenre !== "allGenres") {
       axios
-        .get(`https://msociety.onrender.com/api/genre/${selectedGenre}/movies`)
+        .get(`http://localhost:5000/api/genre/${selectedGenre}/movies`)
         .then((res) => {
           const movieIds = res.data;
           const promises = movieIds.map((id) =>
-            axios.get(`https://msociety.onrender.com/api/movies/${id}`)
+            axios.get(`http://localhost:5000/api/movies/${id}`)
           );
           Promise.all(promises)
             .then((responses) => {
@@ -43,7 +43,7 @@ const Movies = () => {
         });
     } else {
       axios
-        .get("https://msociety.onrender.com/api/movies")
+        .get("http://localhost:5000/api/movies")
         .then((res) => {
           setMovieData(res.data);
         })

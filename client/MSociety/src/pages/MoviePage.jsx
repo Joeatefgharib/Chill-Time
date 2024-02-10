@@ -13,7 +13,7 @@ const MoviePage = () => {
     const [movieData, setMovieData] = useState([]);
 
     useEffect(() => {
-        axios.get(`https://msociety.onrender.com/api/movies/${id}`)
+        axios.get(`http://localhost:5000/api/movies/${id}`)
             .then(response => {
                 console.log(response.data)
                 setMovieData(response.data);
@@ -27,13 +27,13 @@ const MoviePage = () => {
     const [actorDetails, setActorDetails] = useState([]);
 
     useEffect(() => {
-        axios.get(`https://msociety.onrender.com/api/movies/${id}/actors`)
+        axios.get(`http://localhost:5000/api/movies/${id}/actors`)
         .then(response => {
             console.log(response.data)
             setActorsData(response.data);
     
             const actorDetailsPromises = response.data.map(actorId =>
-                axios.get(`https://msociety.onrender.com/api/actors/${actorId}`)
+                axios.get(`http://localhost:5000/api/actors/${actorId}`)
                     .then(response => response.data)
             );
     

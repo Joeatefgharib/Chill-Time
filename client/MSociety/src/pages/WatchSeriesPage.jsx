@@ -10,16 +10,12 @@ const WatchSeriesPage = () => {
   const closeBtnNavigate = () => {
     navigate(-1);
   };
-  const { id } = useParams();
-  const {seasonNumber} = useParams()
-  const {ep} = useParams()
+  const { id, seasonNumber, ep, type } = useParams();
 
-  const { type } = useParams()
   const [seriesData, setSeriesData] = useState([]);
-
   useEffect(() => {
     axios
-      .get(`https://msociety.onrender.com/api/series/${id}`)
+      .get(`http://localhost:5000/api/series/${id}`)
       .then((response) => {
         console.log(response.data);
         setSeriesData(response.data);
@@ -29,18 +25,19 @@ const WatchSeriesPage = () => {
       });
   }, [id]);
 
-  const [episode, setEpisode] = useState([]);
+  const [episode, setEpisode] = useState(null);
   useEffect(() => {
     axios
-      .get(`https://msociety.onrender.com/api/series/${id}/${seasonNumber}/${ep}`)
+      .get(`http://localhost:5000/api/series/${id}/${seasonNumber}/${ep}/qualities`)
       .then((response) => {
         console.log(response.data);
-        setEpisode(response.data);
+        const selectedEpisode = response.data.find(episode => episode.type === type);
+        setEpisode(selectedEpisode);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [id]);
+  }, [id, seasonNumber, ep, type]);
 
   const StyledContainer = styled.div`
     position: relative;
@@ -65,15 +62,17 @@ const WatchSeriesPage = () => {
         }
         onClick={closeBtnNavigate}
       />
-      <div className="lg:absolute lg:mt-[100px] lg:mr-[50px] lg:w-full lg:h-[100vh]">
-        <h2 className="ursor-pointer text-white lg:text-3xl mr-12  text-2xl mt-12">
+      <div className="lg:absolute lg:mt-[100px] lg:mr-[50px] lg:w-full lg:h-[100vh] space-y-6">
+        <h2 className="cursor-pointer text-white lg:text-3xl mr-12  text-2xl mt-12">
           {seriesData.title}
         </h2>
-        <video
-            src={`${episode.link}`}
-            controls={true}
-            autoPlay={true}
-          ></video>
+        {episode ? (
+          <video src={episode.link} controls autoPlay></video>
+        ) : (
+          <p className="text-white lg:text-lg text-base mt-5">
+            الحلقة غير متوفرة بجودة {type}. يرجى المحاولة بجودة أخرى.
+          </p>
+        )}
       </div>
     </StyledContainer>
   );

@@ -1,16 +1,40 @@
-import {useNavigate} from "react-router-dom";
-
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios"
 const SeriesWatchBtn = (props) => {
 
-    const {navigate} = props;
+  const { navigate } = props;
 
-    const navigateRoute = useNavigate()
+  const { id } = useParams()
 
-    return(
-        <>
-            <button className={"w-[100px] bg-red-600 text-white rounded-2xl pt-1 pb-1 pr-4 pl-4 hover:duration-[0.4s] hover:bg-white hover:text-red-600 ml-10"} onClick={() => navigateRoute(`1/episodes`)} >شاهد الأن</button>
-        </>
-    )
-}
+  const navigateRoute = useNavigate();
 
-export default SeriesWatchBtn
+  const [ seasons, setSeasonsData ] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/series/${id}/seasons`)
+      .then((response) => {
+        console.log(response.data[0]);
+        setSeasonsData(response.data[0] )
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id]);
+
+  return (
+    <>
+    {console.log(seasons.seasonNumber)}
+      <button
+        className={
+          "w-[100px] bg-red-600 text-white rounded-2xl pt-1 pb-1 pr-4 pl-4 hover:duration-[0.4s] hover:bg-white hover:text-red-600 ml-10"
+        }
+        onClick={() => navigateRoute(`${seasons.seasonNumber}/episodes`)}
+      >
+        شاهد الأن
+      </button>
+    </>
+  );
+};
+
+export default SeriesWatchBtn;

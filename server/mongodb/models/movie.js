@@ -5,6 +5,7 @@ import Genre from "./genre.js";
 const movieSchema = new mongoose.Schema({
   _id: { type: String, required: true },
   type: { type: String, required: true },
+  lang: { type: String, required: true },
   title: { type: String, required: true },
   genre: [{ type: String, ref: "Genre" }],
   year: { type: String, required: true },

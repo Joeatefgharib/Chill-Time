@@ -9,13 +9,13 @@ const Series = () => {
   const [selectedGenre, setSelectedGenre] = useState("allGenres");
 
   useEffect(() => {
-    axios.get("https://msociety.onrender.com/api/series").then((res) => {
+    axios.get("http://localhost:5000/api/series").then((res) => {
       setSeriesData(res.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get("https://msociety.onrender.com/api/genre").then((res) => {
+    axios.get("http://localhost:5000/api/genre").then((res) => {
       setGenreData(res.data);
     });
   }, []);
@@ -23,11 +23,11 @@ const Series = () => {
   useEffect(() => {
     if (selectedGenre !== "allGenres") {
       axios
-        .get(`https://msociety.onrender.com/api/genre/${selectedGenre}/series`)
+        .get(`http://localhost:5000/api/genre/${selectedGenre}/series`)
         .then((res) => {
           const seriesIds = res.data;
           const promises = seriesIds.map((id) =>
-            axios.get(`https://msociety.onrender.com/api/series/${id}`)
+            axios.get(`http://localhost:5000/api/series/${id}`)
           );
           Promise.all(promises)
             .then((responses) => {
@@ -43,7 +43,7 @@ const Series = () => {
         });
     } else {
       axios
-        .get("https://msociety.onrender.com/api/series")
+        .get("http://localhost:5000//api/series")
         .then((res) => {
           setSeriesData(res.data);
         })

@@ -16,25 +16,25 @@ const Home = () => {
   const [trendMovies, setTrendMovies] = useState([]);
 
   useEffect(() => {
-    axios.get("https://msociety.onrender.com/api/movies").then((res) => {
+    axios.get("http://localhost:5000/api/movies").then((res) => {
       setMovieData(res.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get("https://msociety.onrender.com/api/series").then((res) => {
+    axios.get("http://localhost:5000/api/series").then((res) => {
       setSeriesData(res.data);
     });
   }, []);
 
   useEffect(() => {
     axios
-      .get("https://msociety.onrender.com/api/trendmovies/movies")
+      .get("http://localhost:5000/api/trendmovies/movies")
       .then(async (res) => {
         const trendMovieIds = res.data;
         const movieDetailsPromises = trendMovieIds.map(async (movieId) => {
           const movieDetails = await axios.get(
-            `https://msociety.onrender.com/api/movies/${movieId}`
+            `http://localhost:5000/api/movies/${movieId}`
           );
           return movieDetails.data;
         });

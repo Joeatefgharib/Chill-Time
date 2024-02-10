@@ -8,6 +8,7 @@ import Series from "./mongodb/models/series.js";
 import Movie from "./mongodb/models/movie.js";
 import Actor from "./mongodb/models/actor.js";
 import Genre from "./mongodb/models/genre.js";
+import Lang from "./mongodb/models/lang.js"
 import Trendmovies from "./mongodb/models/trendmovies.js";
 import * as dotenv from "dotenv";
 import cors from "cors";
@@ -215,20 +216,20 @@ app.get("/api/series/:id/:seasonNumber/episodes", async function (req, res) {
     const series = await Series.findById(req.params.id);
 
     if (!series) {
-      res.status(404).send("Series not found");
-      return;
+      return res.status(404).send("Series not found");
     }
 
-    const targetSeason = series.seasons[req.params.seasonNumber - 1];
+    const targetSeason = series.seasons.find(
+      (season) => season.seasonNumber === req.params.seasonNumber
+    );
 
     if (!targetSeason) {
-      res.status(404).send("Season not found");
-      return;
+      return res.status(404).send("Season not found");
     }
 
     const episodes = targetSeason.episodes;
 
-    if (episodes) {
+    if (episodes && episodes.length > 0) {
       res.send(episodes); // Send the entire array of episodes
     } else {
       res.status(404).send("No episodes found in this season");
@@ -238,6 +239,7 @@ app.get("/api/series/:id/:seasonNumber/episodes", async function (req, res) {
     res.status(500).send("Error retrieving episode links");
   }
 });
+
 
 app.get("/api/series/:id/:seasonNumber/:ep", async function (req, res) {
   try {
@@ -379,6 +381,16 @@ app.get("/api/genre", async function (req, res) {
   }
 });
 
+app.get("/api/lang", async function (req, res) {
+  try {
+    const result = await Lang.find({});
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.get("/api/genre/:id", async function (req, res) {
   try {
     const genre = await Genre.findById(req.params.id);
@@ -457,6 +469,23 @@ app.post("/api/genre", async (req, res) => {
     const genre = await Genre.create(data);
     console.log("genre added:", genre);
     res.send("genre added successfully");
+  } catch (error) {
+    console.error("Error adding actor:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/api/lang", async (req, res) => {
+  const data = {
+    _id: req.body._id,
+    lang: req.body.genre,
+    movies: req.body.movies,
+    series: req.body.series,
+  };
+  try {
+    const lang = await Lang.create(data);
+    console.log("genre added:", lang);
+    res.send("تم اضافة اللغة");
   } catch (error) {
     console.error("Error adding actor:", error);
     res.status(500).send("Internal Server Error");
@@ -552,6 +581,7 @@ app.post("/addmovie", async (req, res) => {
     const movieData = {
       _id: req.body._id,
       type: req.body.type,
+      lang: req.body.lang,
       title: req.body.title,
       genre: req.body.genre,
       year: req.body.year,
@@ -592,19 +622,19 @@ app.post("/addmovie", async (req, res) => {
   }
 });
 
-
 app.post("/addseries", async (req, res) => {
   try {
     const seriesData = {
       _id: req.body._id,
       type: req.body.type,
+      lang: req.body.lang,
       title: req.body.title,
       genre: req.body.genre,
       year: req.body.year,
       description: req.body.description,
       seasons: req.body.seasons,
       poster: req.body.poster,
-      actors: req.body.actors, // Assuming actors array is included in the request body
+      actors: req.body.actors, 
     };
 
     const newSeries = await Series.create(seriesData);
@@ -629,6 +659,45 @@ app.post("/addseries", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+app.patch("/addseason/:seriesId", async (req, res) => {
+  const seriesId = req.params.seriesId;
+  const { seasonNumber, episodes } = req.body;
+
+  try {
+    // Find the existing series by its ID
+    let existingSeries = await Series.findById(seriesId);
+
+    if (!existingSeries) {
+      return res.status(404).send("Series not found");
+    }
+
+    // Check if the season already exists in the series
+    let existingSeason = existingSeries.seasons.find(season => season.seasonNumber === seasonNumber);
+
+    if (!existingSeason) {
+      // If the season doesn't exist, create a new one and add episodes
+      existingSeason = {
+        seasonNumber,
+        episodes: []
+      };
+      existingSeries.seasons.push(existingSeason);
+    }
+
+    // Add the new episodes to the existing or newly created season
+    existingSeason.episodes.push(...episodes);
+
+    // Save the updated series document
+    await existingSeries.save();
+
+    console.log("Episodes added to season:", existingSeason);
+    res.send("تمت إضافة الحلقات بنجاح");
+  } catch (error) {
+    console.error("Error adding episodes to season:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 
 const startServer = async () => {
   try {

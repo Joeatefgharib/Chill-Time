@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-const Episode = ({ episodeNumber, title, description }) => {
+const Episode = ({ episodeNumber, title, description, img }) => {
     const [showMenu, setShowMenu] = useState(false);
     const [selectedQuality, setSelectedQuality] = useState("");
     const [error, setError] = useState(false);
@@ -21,7 +21,7 @@ const Episode = ({ episodeNumber, title, description }) => {
         if (selectedQuality) {
             const currentPath = window.location.pathname;
             const basePath = currentPath.substring(0, currentPath.lastIndexOf('/episodes'));
-            navigate(`${basePath}/:${episodeNumber}/watch/${selectedQuality}`);
+            navigate(`${basePath}/${episodeNumber}/watch/${selectedQuality}`);
         } else {
             setError(true); // Show error if no quality is selected
         }
@@ -34,8 +34,8 @@ const Episode = ({ episodeNumber, title, description }) => {
                     onClick={toggleMenu}
                     className="lg:w-[320px] lg:h-[190px] rounded-2xl cursor-pointer"
                     id="img"
-                    alt="ep1"
-                    src="https://img.akw.onl/thumb/320x190/uploads/MjSvL.jpg"
+                    alt={episodeNumber}
+                    src={img}
                 />
                 <div>
                     <h2 onClick={toggleMenu} className="text-white text-2xl cursor-pointer">{title}</h2>

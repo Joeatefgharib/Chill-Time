@@ -11,6 +11,10 @@ const seriesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    lang: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true
