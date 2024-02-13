@@ -94,23 +94,25 @@ const Home = () => {
           </button>
         </Link>
       </div>
-      <div
-        id={`movies`}
-        className=" lg:flex lg:mt-[30px] lg:mr-[120px] lg:mb-[30px] lg:ml-[0] lg:p-0 grid grid-cols-2  items-center pt-8 pr-1 pl-1 "
-      >
-        {movieData.map((movie) => {
-          return (
-            <Card
-              type={movie.type}
-              id={movie._id}
-              poster={movie.poster}
-              title={movie.title}
-              genre={movie.genre}
-              key={movie._id}
-            />
-          );
-        })}
-      </div>
+      <Swiper
+      id="movies"
+      className="lg:grid lg:grid-cols-8 lg:mt-[30px] lg:mr-[30px] lg:mb-[30px] lg:ml-[30px] lg:p-0 grid grid-cols-2 items-center pt-8 pr-1 pl-1"
+      spaceBetween={10}
+      slidesPerView={8} // Display 8 cards per view
+      pagination={{ clickable: true }}
+    >
+      {movieData.map((movie) => (
+        <SwiperSlide key={movie._id}>
+          <Card
+            type={movie.type}
+            id={movie._id}
+            poster={movie.poster}
+            title={movie.title}
+            genre={movie.genre}
+          />
+        </SwiperSlide>
+      ))}
+    </Swiper>
       <div id="seriesLink" className=" relative lg:pt-16">
         <h3
           id="seriesHomePage"
@@ -127,23 +129,25 @@ const Home = () => {
           </button>
         </Link>
       </div>
-      <div
-        id={`series`}
-        className=" lg:flex lg:mt-[30px] lg:mr-[120px] lg:mb-[30px] lg:ml-[0] lg:p-0 grid grid-cols-2  items-center pt-8 pr-1 pl-1"
-      >
-        {seriesData.map((series) => {
-          return (
-            <Card
-              type={series.type}
-              id={series._id}
-              poster={series.poster}
-              title={series.title}
-              genre={series.genre}
-              key={series._id}
-            />
-          );
-        })}
-      </div>
+      <Swiper
+      id="series"
+      className="lg:grid lg:grid-cols-8 lg:mt-[30px] lg:mr-[30px] lg:mb-[30px] lg:ml-[30px] lg:p-0 grid grid-cols-2 items-center pt-8 pr-1 pl-1"
+      spaceBetween={10}
+      slidesPerView={8} // Display 8 cards per view
+      pagination={{ clickable: true }}
+    >
+      {seriesData.map((series) => (
+        <SwiperSlide key={series._id}>
+          <Card
+            type={series.type}
+            id={series._id}
+            poster={series.poster}
+            title={series.title}
+            genre={series.genre}
+          />
+        </SwiperSlide>
+      ))}
+    </Swiper>
     </>
   );
 };

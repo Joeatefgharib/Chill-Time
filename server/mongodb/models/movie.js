@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import Actor from "./actor.js";
 import Genre from "./genre.js";
+import Lang from "./lang.js"
 
 const movieSchema = new mongoose.Schema({
   _id: { type: String, required: true },
   type: { type: String, required: true },
-  lang: { type: String, required: true },
+  lang: { type: String, ref: "Lang" },
   title: { type: String, required: true },
   genre: [{ type: String, ref: "Genre" }],
   year: { type: String, required: true },
@@ -47,6 +48,21 @@ movieSchema.post("findOneAndUpdate", async function (doc) {
       },
     });
   }
+
+  const lang = doc.lang;
+  for (const langData of lang) {
+    await Lang.findByIdAndUpdate(langData.langId, {
+      $addToSet: {
+        movies: {
+          _id: doc._id,
+          title: doc.title,
+          poster: doc.poster,
+        },
+      },
+    });
+  }
+  
+
   const trending = doc.trending;
 
 });

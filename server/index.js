@@ -26,6 +26,25 @@ app.use(express.static("public"));
 // Middleware to parse incoming request data
 app.use(express.urlencoded({ extended: true }));
 
+
+app.get('/stream/:infoHash', (req, res) => {
+  const { infoHash } = req.params;
+  
+  // Check if the info hash is valid (in a real-world scenario, you would validate this)
+  const torrentId = `magnet:?xt=urn:btih:${infoHash}`;
+
+  client.add(torrentId, { path: '/path/to/download/directory' }, (torrent) => {
+      const file = torrent.files.find(file => file.name.endsWith('.mp4'));
+
+      if (!file) {
+          return res.status(404).send('MP4 file not found in torrent');
+      }
+
+      res.header('Content-Disposition', `attachment; filename="${file.name}"`);
+      file.createReadStream().pipe(res);
+  });
+});
+
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
@@ -391,6 +410,36 @@ app.get("/api/lang", async function (req, res) {
   }
 });
 
+app.get("/api/lang/:id", async function (req, res) {
+  try {
+    const lang = await Lang.findById(req.params.id);
+    res.send(lang);
+  } catch {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/api/lang/:id/movies", async function (req, res) {
+  try {
+    const lang = await Lang.findById(req.params.id);
+    res.send(lang.movies);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/api/lang/:id/series", async function (req, res) {
+  try {
+    const lang = await Lang.findById(req.params.id);
+    res.send(lang.series);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.get("/api/genre/:id", async function (req, res) {
   try {
     const genre = await Genre.findById(req.params.id);
@@ -439,7 +488,7 @@ app.get("/api/genre/:id/series", async function (req, res) {
     res.send(genre.series);
   } catch {
     console.error(err);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send("Internal Server Error", err);
   }
 });
 
@@ -478,7 +527,7 @@ app.post("/api/genre", async (req, res) => {
 app.post("/api/lang", async (req, res) => {
   const data = {
     _id: req.body._id,
-    lang: req.body.genre,
+    lang: req.body.lang,
     movies: req.body.movies,
     series: req.body.series,
   };
@@ -489,51 +538,6 @@ app.post("/api/lang", async (req, res) => {
   } catch (error) {
     console.error("Error adding actor:", error);
     res.status(500).send("Internal Server Error");
-  }
-});
-
-app.post("/signup", async (req, res) => {
-  const data = {
-    name: req.body.username,
-    password: req.body.password,
-  };
-  const existingUser = await Login.findOne({ name: data.name });
-  if (existingUser) {
-    res.send("user already exists, login please");
-  } else {
-    try {
-      const hashedPassword = await bcrypt.hash(data.password, 10);
-
-      data.password = hashedPassword;
-
-      const userData = await Login.create(data);
-      console.log(userData);
-      res.send("User registered successfully");
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Internal Server Error");
-    }
-  }
-});
-
-app.post("/login", async (req, res) => {
-  try {
-    const check = await Login.findOne({ name: req.body.username });
-    if (!check) {
-      res.send("username cannot found");
-    }
-
-    const isPasswordMatch = await bcrypt.compare(
-      req.body.password,
-      check.password
-    );
-    if (isPasswordMatch) {
-      res.redirect("/dashboard");
-    } else {
-      res.send("wrong username or password");
-    }
-  } catch {
-    res.send("wrong details");
   }
 });
 
@@ -606,6 +610,13 @@ app.post("/addmovie", async (req, res) => {
         $addToSet: { movies: newMovie._id },
       });
     }
+
+    const langId = movieData.lang;
+    await Lang.findByIdAndUpdate(langId, {
+      $addToSet: { movies: newMovie._id },
+    });
+
+
     if (movieData.trending) {
       await Trendmovies.updateOne(
         {},
@@ -651,6 +662,11 @@ app.post("/addseries", async (req, res) => {
         $addToSet: { series: newSeries._id },
       });
     }
+
+    const langId = seriesData.lang;
+    await Lang.findByIdAndUpdate(langId, {
+      $addToSet: { series: newSeries._id },
+    });
 
     console.log("Series added:", newSeries);
     res.send("تمت أضافة المسلسل بنجاح");

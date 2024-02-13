@@ -70,13 +70,15 @@ const WatchMoviePage = () => {
         >
           {movieData.title}
         </h2>
-        <div className=" lg:absolute lg:items-center lg:mt-[50px] lg:mr-[150px] lg:w-[1200px] lg:h-[600px] w-[350px] h-[300px] mr-6 mt-10 ">
-          <video
-            src={`${movie.link}`}
-            controls={true}
-            autoPlay={true}
-          ></video>
-        </div>
+        <iframe
+          className="lg:absolute lg:items-center lg:mt-[50px] lg:mr-[150px] lg:w-[1200px] lg:h-[600px] w-[350px] h-[300px] mr-6 mt-10"
+          width="1200"
+          height="620"
+          src={movie.link}
+          scrolling="no"
+          frameborder="0"
+          allowfullscreen="true"
+        ></iframe>
       </div>
     </StyledContainer>
   );

@@ -7,6 +7,8 @@ const Series = () => {
   const [seriesData, setSeriesData] = useState([]);
   const [genreData, setGenreData] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("allGenres");
+  const [langData, setLangData] = useState([])
+  const [selectedLang, setSelectedLang] = useState("allLangs")
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/series").then((res) => {
@@ -17,6 +19,12 @@ const Series = () => {
   useEffect(() => {
     axios.get("http://localhost:5000/api/genre").then((res) => {
       setGenreData(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/lang").then((res) => {
+      setLangData(res.data);
     });
   }, []);
 
@@ -53,8 +61,46 @@ const Series = () => {
     }
   }, [selectedGenre]);
 
+  useEffect(() => {
+    if (selectedLang !== "allLangs") {
+      axios
+        .get(`http://localhost:5000/api/lang/${selectedLang}/series`)
+        .then((res) => {
+          const movieIds = res.data;
+          const promises = movieIds.map((id) =>
+            axios.get(`http://localhost:5000/api/series/${id}`)
+          );
+          Promise.all(promises)
+            .then((responses) => {
+              const seriesData = responses.map((response) => response.data);
+              setSeriesData(seriesData);
+            })
+            .catch((error) => {
+              console.error("Error fetching series data:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error fetching lang series:", error);
+        });
+    } else {
+      // Fetch all movies if "allLangs" is selected
+      axios
+        .get("http://localhost:5000/api/series")
+        .then((res) => {
+          setSeriesData(res.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching all series:", error);
+        });
+    }
+  }, [selectedLang]);
+
   const handleGenreChange = (event) => {
     setSelectedGenre(event.target.value);
+  };
+
+  const handleLangChange = (event) => {
+    setSelectedLang(event.target.value);
   };
 
   return (
@@ -67,6 +113,27 @@ const Series = () => {
           </h4>
           <select
             className=" absolute lg:relative left-[30px] border-none  rounded-[30px] outline-none bg-red-600 text-white p-1 text-sm font-medium items-center mr-[200px]"
+            onChange={handleGenreChange}
+          >
+            <option
+              className=" p-1 border-none outline-none"
+              value="allLangs"
+              key={"allLangs"}
+            >
+              جميع اللغات
+            </option>
+            {langData.map((lang) => (
+              <option
+                className="p-1 border-none outline-none"
+                key={lang.id}
+                value={lang.id}
+              >
+                {lang.lang}
+              </option>
+            ))}
+          </select>
+          <select
+            className=" absolute lg:relative left-[220px] border-none rounded-[30px] outline-none bg-red-600 text-white p-1 text-sm font-medium items-center lg:mr-[200px]"
             onChange={handleGenreChange}
           >
             <option
@@ -87,8 +154,8 @@ const Series = () => {
             ))}
           </select>
         </div>
-        <div className=" text-white fixed lg:mr-[100px] mr-[5px] mt-0">
-          <div className={` lg:flex grid grid-cols-2 mt-[60px]`}>
+        <div className=" text-white fixed lg:mr-[70px] mt-0 overflow-x-auto">
+          <div className={` grid lg:grid-cols-7  grid-cols-2 mt-[60px]`}>
             {seriesData.map((series) => {
               return (
                 <Card

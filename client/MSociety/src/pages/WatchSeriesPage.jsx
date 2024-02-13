@@ -67,7 +67,15 @@ const WatchSeriesPage = () => {
           {seriesData.title}
         </h2>
         {episode ? (
-          <video src={episode.link} controls autoPlay></video>
+          <iframe
+          className="lg:absolute lg:items-center lg:mt-[50px] lg:mr-[150px] lg:w-[1200px] lg:h-[600px] w-[350px] h-[300px] mr-6 mt-10"
+          width="1200"
+          height="620"
+          src={episode.link}
+          scrolling="no"
+          frameborder="0"
+          allowfullscreen="true"
+        ></iframe>
         ) : (
           <p className="text-white lg:text-lg text-base mt-5">
             الحلقة غير متوفرة بجودة {type}. يرجى المحاولة بجودة أخرى.
