@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Actor from "./actor.js";
 import Genre from "./genre.js";
-
+import Trendseries from "./trendseries.js";
 const seriesSchema = new mongoose.Schema({
   _id: {
     type: String,
@@ -57,6 +57,8 @@ const seriesSchema = new mongoose.Schema({
   ],
   poster: { type: String, required: true },
   actors: [{ type: String, ref: "Actor" }], // Reference to actors
+  trending: { type: Boolean, default: false },
+  trendpic: {type: String, required:false}
 });
 
 seriesSchema.post("findOneAndUpdate", async function (doc) {
@@ -97,6 +99,9 @@ seriesSchema.post("findOneAndUpdate", async function (doc) {
       },
     });
   }
+
+  const trending = doc.trending;
+
 });
 
 const Series = mongoose.model("Series", seriesSchema);

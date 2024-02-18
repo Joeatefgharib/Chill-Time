@@ -10,6 +10,9 @@ import WatchMoviePage from './pages/WatchMoviePage.jsx'
 import WatchSeriesPage from './pages/WatchSeriesPage.jsx'
 import ActorPage from './pages/ActorPage.jsx'
 import SearchPage from './pages/SearchPage.jsx'
+import TurkishSeries from './pages/TurkishSeries.jsx';
+import ArabicSeries from './pages/ArabicSeries.jsx'
+import EnglishSeries from './pages/EnglishSeries.jsx';
 
 function App() {
 
@@ -21,9 +24,16 @@ function App() {
           <Route path={'series'} element={<Series />} />
           <Route path={'movie/:id'} element={<MoviePage />} />
           <Route path={'movie/:id/watch/:type'} element={<WatchMoviePage />} />
+          <Route path={'movies/عربي'} element={<Movies />} />
+          <Route path={'movies/اجنبي'} element={<Movies />} />
+          <Route path={'movies/تركي'} element={<Movies />} />
           <Route path={'series/:id'} element={<SeriesPage />}/>
           <Route path={'series/:id/:seasonNumber/episodes'} element={<EpsMenu />} />
           <Route path={'series/:id/:seasonNumber/:ep/watch/:type'} element={<WatchSeriesPage />} />
+          <Route path={'series/trending'} element={<Series />}/>
+          <Route path={'series/عربي'} element={<ArabicSeries />}/>
+          <Route path={'series/اجنبي'} element={<EnglishSeries />}/>
+          <Route path={'series/تركي'} element={<TurkishSeries />}/>
           <Route path={'actors/:id'} element={<ActorPage />} />
           <Route path={'search/:id'} element={<SearchPage />} />
       </Routes>

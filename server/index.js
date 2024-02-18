@@ -9,7 +9,9 @@ import Movie from "./mongodb/models/movie.js";
 import Actor from "./mongodb/models/actor.js";
 import Genre from "./mongodb/models/genre.js";
 import Lang from "./mongodb/models/lang.js"
+import Year from "./mongodb/models/year.js"
 import Trendmovies from "./mongodb/models/trendmovies.js";
+import Trendseries from "./mongodb/models/trendseries.js";
 import * as dotenv from "dotenv";
 import cors from "cors";
 
@@ -26,24 +28,6 @@ app.use(express.static("public"));
 // Middleware to parse incoming request data
 app.use(express.urlencoded({ extended: true }));
 
-
-app.get('/stream/:infoHash', (req, res) => {
-  const { infoHash } = req.params;
-  
-  // Check if the info hash is valid (in a real-world scenario, you would validate this)
-  const torrentId = `magnet:?xt=urn:btih:${infoHash}`;
-
-  client.add(torrentId, { path: '/path/to/download/directory' }, (torrent) => {
-      const file = torrent.files.find(file => file.name.endsWith('.mp4'));
-
-      if (!file) {
-          return res.status(404).send('MP4 file not found in torrent');
-      }
-
-      res.header('Content-Disposition', `attachment; filename="${file.name}"`);
-      file.createReadStream().pipe(res);
-  });
-});
 
 app.get("/signup", (req, res) => {
   res.render("signup");
@@ -440,6 +424,46 @@ app.get("/api/lang/:id/series", async function (req, res) {
   }
 });
 
+app.get("/api/year", async function (req, res) {
+  try {
+    const result = await Year.find({});
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/api/year/:id", async function (req, res) {
+  try {
+    const year = await Year.findById(req.params.id);
+    res.send(year);
+  } catch {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/api/year/:id/movies", async function (req, res) {
+  try {
+    const year = await Year.findById(req.params.id);
+    res.send(year.movies);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/api/year/:id/series", async function (req, res) {
+  try {
+    const year = await Year.findById(req.params.id);
+    res.send(year.series);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.get("/api/genre/:id", async function (req, res) {
   try {
     const genre = await Genre.findById(req.params.id);
@@ -482,6 +506,28 @@ app.get("/api/trendmovies/movies", async function (req, res) {
   }
 });
 
+app.get("/api/trendseries", async function (req, res) {
+  try {
+    const result = await Trendseries.find({});
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/api/trendseries/series", async function (req, res) {
+  try {
+    const trendSeries = await Trendseries.find({}); // Fetch all trend movies
+    const seriesArray = trendSeries.map(trendSeries => trendSeries.series); // Extract movies array from each trend movie
+    const allSeries = [].concat(...seriesArray); // Concatenate all movies arrays into a single array
+    res.json(allSeries); // Send the concatenated movies array
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.get("/api/genre/:id/series", async function (req, res) {
   try {
     const genre = await Genre.findById(req.params.id);
@@ -500,6 +546,21 @@ app.post("/api/trendmovies", async (req, res) => {
   try {
     const trendmovies = await Trendmovies.create(data);
     console.log("trending added:", trendmovies);
+    res.send("trending added successfully");
+  } catch (error) {
+    console.error("Error adding trending:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/api/trendseries", async (req, res) => {
+  const data = {
+    _id: req.body._id,
+    series: req.body.series,
+  };
+  try {
+    const trendseries = await Trendseries.create(data);
+    console.log("trending added:", trendseries);
     res.send("trending added successfully");
   } catch (error) {
     console.error("Error adding trending:", error);
@@ -537,6 +598,23 @@ app.post("/api/lang", async (req, res) => {
     res.send("تم اضافة اللغة");
   } catch (error) {
     console.error("Error adding actor:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/api/year", async (req, res) => {
+  const data = {
+    _id: req.body._id,
+    year: req.body.year,
+    movies: req.body.movies,
+    series: req.body.series,
+  };
+  try {
+    const year = await Year.create(data);
+    console.log("genre added:", year);
+    res.send("تم اضافة السنه");
+  } catch (error) {
+    console.error("Error adding year:", error);
     res.status(500).send("Internal Server Error");
   }
 });
@@ -616,6 +694,11 @@ app.post("/addmovie", async (req, res) => {
       $addToSet: { movies: newMovie._id },
     });
 
+    const yearId = movieData.year;
+    await Year.findByIdAndUpdate(yearId, {
+      $addToSet: { movies: newMovie._id },
+    });
+
 
     if (movieData.trending) {
       await Trendmovies.updateOne(
@@ -667,6 +750,14 @@ app.post("/addseries", async (req, res) => {
     await Lang.findByIdAndUpdate(langId, {
       $addToSet: { series: newSeries._id },
     });
+
+    if (seriesData.trending) {
+      await Trendseries.updateOne(
+        {},
+        { $addToSet: { series: newSeries._id } },
+        { upsert: true }
+      );
+    }
 
     console.log("Series added:", newSeries);
     res.send("تمت أضافة المسلسل بنجاح");

@@ -26,7 +26,19 @@ const NavListItem = ({ nav }) => {
       >
         {nav.name}
       </Link>
-      {nav.id !== 1 && showLanguages && (
+      {(nav.id === 3 && showLanguages) && (
+        <div
+          className="absolute top-full bg-transparent border border-gray-300 rounded shadow p-1 w-48 "
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <Link className="block py-1 hover:text-red-600 duration-[.5s]" to="/series/trending">افضل مسلسلات الشهر</Link>
+          <Link className="block py-1 hover:text-red-600 duration-[.5s]" to="/series/عربي">عربي</Link>
+          <Link className="block py-1 hover:text-red-600 duration-[.5s]" to="/series/اجنبي">اجنبي</Link>
+          <Link className="block py-1 hover:text-red-600 duration-[.5s]" to="/series/تركي">تركي</Link>
+        </div>
+      )}
+      {(nav.id !== 3 && nav.id !== 1 && showLanguages) && (
         <div
           className="absolute top-full bg-transparent border border-gray-300 rounded shadow p-1 "
           onMouseEnter={handleMouseEnter}
@@ -34,7 +46,7 @@ const NavListItem = ({ nav }) => {
         >
           <Link className="block py-1 hover:text-red-600 duration-[.5s]" to="/movies/عربي">عربي</Link>
           <Link className="block py-1 hover:text-red-600 duration-[.5s]" to="/movies/اجنبي">اجنبي</Link>
-          <Link className="block py-1 hover:text-red-600 duration-[.5s]" to="/movie/تركي">تركي</Link>
+          <Link className="block py-1 hover:text-red-600 duration-[.5s]" to="/movies/تركي">تركي</Link>
         </div>
       )}
     </li>

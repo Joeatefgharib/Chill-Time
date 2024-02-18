@@ -2,8 +2,10 @@ import Header from "../components/Header.jsx";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Card from "../components/Card.jsx";
+import { useParams } from "react-router-dom";
 
 const Series = () => {
+
   const [seriesData, setSeriesData] = useState([]);
   const [genreData, setGenreData] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("allGenres");

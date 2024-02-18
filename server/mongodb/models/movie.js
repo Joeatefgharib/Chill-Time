@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import Actor from "./actor.js";
 import Genre from "./genre.js";
-import Lang from "./lang.js"
+import Lang from "./lang.js";
+import Year from "./year.js"
 
 const movieSchema = new mongoose.Schema({
   _id: { type: String, required: true },
@@ -9,7 +10,7 @@ const movieSchema = new mongoose.Schema({
   lang: { type: String, ref: "Lang" },
   title: { type: String, required: true },
   genre: [{ type: String, ref: "Genre" }],
-  year: { type: String, required: true },
+  year: { type: String, ref: "Year" },
   description: { type: String, required: true },
   poster: { type: String, required: true },
   qualities: [
@@ -52,6 +53,19 @@ movieSchema.post("findOneAndUpdate", async function (doc) {
   const lang = doc.lang;
   for (const langData of lang) {
     await Lang.findByIdAndUpdate(langData.langId, {
+      $addToSet: {
+        movies: {
+          _id: doc._id,
+          title: doc.title,
+          poster: doc.poster,
+        },
+      },
+    });
+  }
+
+  const year = doc.year;
+  for (const yearData of year) {
+    await Year.findByIdAndUpdate(yearData.yearId, {
       $addToSet: {
         movies: {
           _id: doc._id,
