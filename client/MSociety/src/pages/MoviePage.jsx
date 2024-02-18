@@ -53,15 +53,20 @@ const MoviePage = () => {
     }, [id]);
 
     const StyledContainer = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    color: white;
-    overflow-x: hidden; /* Hide horizontal overflow */
-    overflow-y: auto;   /* Enable vertical scrolling */
-    &::before{
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      color: white;
+      overflow-x: hidden; /* Hide horizontal overflow */
+      overflow-y: auto;   /* Enable vertical scrolling */
+      
+      @media (max-width: 768px) {
+        padding-top: 200px; /* Padding for mobile devices */
+      }
+    
+      &::before {
         content: "";
         position: absolute;
         top: 0;
@@ -72,14 +77,15 @@ const MoviePage = () => {
         background-size: cover;
         filter: blur(5px) brightness(0.2);
         z-index: -1;
-    }
+      }
     `;
+    
 
     return(
         <>
             <Header />
             <StyledContainer  >
-                <div id={'Btns'} className="lg:inline-grid lg:gap-3 lg:top-[225px] lg:left-[100px]   absolute top-[500px] left-[100px]  ">
+                <div id={'Btns'} className="lg:inline-grid lg:gap-3 lg:top-[225px] lg:left-[100px]  absolute top-[480px] left-[50px]  ">
                     <MovieWatchBtn  />
                     <MovieDownloadbtn />
                 </div>

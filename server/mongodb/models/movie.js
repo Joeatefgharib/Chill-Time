@@ -15,8 +15,9 @@ const movieSchema = new mongoose.Schema({
   poster: { type: String, required: true },
   qualities: [
     {
-      type: { type: String, required: true }, // Quality type (e.g., HD, SD, 4K)
-      link: { type: String, required: true }, // Link to the movie for this quality
+      type: { type: String, required: true }, 
+      link: { type: String, required: true },
+      download: { type: String, required: true} 
     }
   ],
   actors: [{ type: String, ref: "Actor" }], // Reference to actors
