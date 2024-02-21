@@ -45,6 +45,7 @@ const seriesSchema = new mongoose.Schema({
             {
               type: { type: String, required: true }, // Quality type (e.g., HD, SD, 4K)
               link: { type: String, required: true }, // Link to the movie for this quality
+              download: { type: String, required: true}
             },
           ],
         },

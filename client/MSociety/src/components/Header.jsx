@@ -28,7 +28,7 @@ const Header = () => {
                 : "logo text-4xl text-white font-extrabold mr-6"
             }
           >
-            MSociety
+            ChillTime
           </a>
         </Link>
         <div

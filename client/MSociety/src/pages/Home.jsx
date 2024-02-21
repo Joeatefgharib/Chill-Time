@@ -95,24 +95,27 @@ const Home = () => {
         </Link>
       </div>
       <Swiper
-      id="movies"
-      className="lg:grid lg:grid-cols-8 lg:mt-[30px] lg:mr-[30px] lg:mb-[30px] lg:ml-[30px] lg:p-0 grid grid-cols-2 items-center pt-8 pr-1 pl-1"
-      spaceBetween={10}
-      slidesPerView={8} // Display 8 cards per view
-      pagination={{ clickable: true }}
-    >
-      {movieData.map((movie) => (
-        <SwiperSlide key={movie._id}>
-          <Card
-            type={movie.type}
-            id={movie._id}
-            poster={movie.poster}
-            title={movie.title}
-            genre={movie.genre}
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+        id="movies"
+        className="lg:grid lg:grid-cols-8 lg:mt-[30px] lg:mr-[30px] lg:mb-[30px] lg:ml-[30px] lg:p-0 grid grid-cols-2 items-center pt-8 pr-1 pl-1"
+        spaceBetween={10}
+        slidesPerView={8} // Display 8 cards per view
+        pagination={{ clickable: true }}
+      >
+        {movieData
+          .slice()
+          .reverse()
+          .map((movie) => (
+            <SwiperSlide key={movie._id}>
+              <Card
+                type={movie.type}
+                id={movie._id}
+                poster={movie.poster}
+                title={movie.title}
+                genre={movie.genre}
+              />
+            </SwiperSlide>
+          ))}
+      </Swiper>
       <div id="seriesLink" className=" relative lg:pt-16">
         <h3
           id="seriesHomePage"
@@ -130,24 +133,27 @@ const Home = () => {
         </Link>
       </div>
       <Swiper
-      id="series"
-      className="lg:grid lg:grid-cols-8 lg:mt-[30px] lg:mr-[30px] lg:mb-[30px] lg:ml-[30px] lg:p-0 grid grid-cols-2 items-center pt-8 pr-1 pl-1"
-      spaceBetween={10}
-      slidesPerView={8} // Display 8 cards per view
-      pagination={{ clickable: true }}
-    >
-      {seriesData.map((series) => (
-        <SwiperSlide key={series._id}>
-          <Card
-            type={series.type}
-            id={series._id}
-            poster={series.poster}
-            title={series.title}
-            genre={series.genre}
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+        id="series"
+        className="lg:grid lg:grid-cols-8 lg:mt-[30px] lg:mr-[30px] lg:mb-[30px] lg:ml-[30px] lg:p-0 grid grid-cols-2 items-center pt-8 pr-1 pl-1"
+        spaceBetween={10}
+        slidesPerView={8} // Display 8 cards per view
+        pagination={{ clickable: true }}
+      >
+        {seriesData
+          .slice()
+          .reverse()
+          .map((series) => (
+            <SwiperSlide key={series._id}>
+              <Card
+                type={series.type}
+                id={series._id}
+                poster={series.poster}
+                title={series.title}
+                genre={series.genre}
+              />
+            </SwiperSlide>
+          ))}
+      </Swiper>
     </>
   );
 };

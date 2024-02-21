@@ -155,7 +155,7 @@ const Movies = () => {
             ))}
           </select>
         </div>
-        <div className="text-white fixed lg:mr-[70px] mt-0 overflow-x-auto">
+        <div className="text-white fixed lg:mr-[70px] mt-0 ">
           <div className=" grid lg:grid-cols-7  grid-cols-2 mt-[60px]">
             {movieData.map((movie) => (
               <Card
