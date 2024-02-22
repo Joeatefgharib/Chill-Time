@@ -13,7 +13,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/search/${id}`)
+      .get(`http://89.116.110.212:5000/api/search/${id}`)
       .then((response) => {
         setSearchData(response.data);
         setMovies(response.data.movies);

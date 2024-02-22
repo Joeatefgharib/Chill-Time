@@ -15,7 +15,7 @@ const WatchSeriesPage = () => {
   const [seriesData, setSeriesData] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/series/${id}`)
+      .get(`http://89.116.110.212:5000/api/series/${id}`)
       .then((response) => {
         console.log(response.data);
         setSeriesData(response.data);
@@ -28,7 +28,7 @@ const WatchSeriesPage = () => {
   const [episode, setEpisode] = useState(null);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/series/${id}/${seasonNumber}/${ep}/qualities`)
+      .get(`http://89.116.110.212:5000/api/series/${id}/${seasonNumber}/${ep}/qualities`)
       .then((response) => {
         console.log(response.data);
         const selectedEpisode = response.data.find(episode => episode.type === type);

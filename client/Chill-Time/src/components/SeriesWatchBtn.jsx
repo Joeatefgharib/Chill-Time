@@ -12,7 +12,7 @@ const SeriesWatchBtn = (props) => {
   const [ seasons, setSeasonsData ] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/series/${id}/seasons`)
+      .get(`http://89.116.110.212:5000/api/series/${id}/seasons`)
       .then((response) => {
         console.log(response.data[0]);
         setSeasonsData(response.data[0] )

@@ -14,7 +14,7 @@ const SeriesPage = () => {
     const [actorDetails, setActorDetails] = useState([]);
     
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/series/${id}`)
+        axios.get(`http://89.116.110.212:5000/api/series/${id}`)
             .then(response => {
                 console.log(response.data)
                 setSeriesData(response.data);
@@ -25,13 +25,13 @@ const SeriesPage = () => {
     }, [id]);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/series/${id}/actors`)
+        axios.get(`http://89.116.110.212:5000/api/series/${id}/actors`)
             .then(response => {
                 console.log(response.data)
                 setActorsData(response.data);
     
                 const actorDetailsPromises = response.data.map(actorId =>
-                    axios.get(`http://localhost:5000/api/actors/${actorId}`)
+                    axios.get(`http://89.116.110.212:5000/api/actors/${actorId}`)
                         .then(response => response.data)
                 );
     

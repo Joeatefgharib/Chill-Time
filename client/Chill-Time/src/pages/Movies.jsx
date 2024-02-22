@@ -11,19 +11,19 @@ const Movies = () => {
   const [selectedLang, setSelectedLang] = useState("allLangs")
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/movies").then((res) => {
+    axios.get("http://89.116.110.212:5000/api/movies").then((res) => {
       setMovieData(res.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/genre").then((res) => {
+    axios.get("http://89.116.110.212:5000/api/genre").then((res) => {
       setGenreData(res.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/lang").then((res) => {
+    axios.get("http://89.116.110.212:5000/api/lang").then((res) => {
       setLangData(res.data);
     });
   }, []);
@@ -31,11 +31,11 @@ const Movies = () => {
   useEffect(() => {
     if (selectedGenre !== "allGenres") {
       axios
-        .get(`http://localhost:5000/api/genre/${selectedGenre}/movies`)
+        .get(`http://89.116.110.212:5000/api/genre/${selectedGenre}/movies`)
         .then((res) => {
           const movieIds = res.data;
           const promises = movieIds.map((id) =>
-            axios.get(`http://localhost:5000/api/movies/${id}`)
+            axios.get(`http://89.116.110.212:5000/api/movies/${id}`)
           );
           Promise.all(promises)
             .then((responses) => {
@@ -51,7 +51,7 @@ const Movies = () => {
         });
     } else {
       axios
-        .get("http://localhost:5000/api/movies")
+        .get("http://89.116.110.212:5000/api/movies")
         .then((res) => {
           setMovieData(res.data);
         })
@@ -64,11 +64,11 @@ const Movies = () => {
   useEffect(() => {
     if (selectedLang !== "allLangs") {
       axios
-        .get(`http://localhost:5000/api/lang/${selectedLang}/movies`)
+        .get(`http://89.116.110.212:5000/api/lang/${selectedLang}/movies`)
         .then((res) => {
           const movieIds = res.data;
           const promises = movieIds.map((id) =>
-            axios.get(`http://localhost:5000/api/movies/${id}`)
+            axios.get(`http://89.116.110.212:5000/api/movies/${id}`)
           );
           Promise.all(promises)
             .then((responses) => {
@@ -85,7 +85,7 @@ const Movies = () => {
     } else {
       // Fetch all movies if "allLangs" is selected
       axios
-        .get("http://localhost:5000/api/movies")
+        .get("http://89.116.110.212:5000/api/movies")
         .then((res) => {
           setMovieData(res.data);
         })

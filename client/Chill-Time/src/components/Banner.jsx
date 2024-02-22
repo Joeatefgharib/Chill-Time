@@ -12,7 +12,7 @@ const Banner = ({ id, trendpic, title, year, length, genre, description }) => {
                 title={title}
                 year={year}
                 length={length}
-                genre={genre}
+                genre={genre[0]}
                 description={description}
                 id={id}
               />

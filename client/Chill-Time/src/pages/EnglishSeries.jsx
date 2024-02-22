@@ -10,11 +10,11 @@ const EnglishSeries = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/lang/اجنبي").then((res) => {
+    axios.get("http://89.116.110.212:5000/api/lang/اجنبي").then((res) => {
       const result = res.data;
       const seriesIds = result.series;
       const promises = seriesIds.map((id) =>
-        axios.get(`http://localhost:5000/api/series/${id}`)
+        axios.get(`http://89.116.110.212:5000/api/series/${id}`)
       );
   
       Promise.all(promises)
@@ -35,7 +35,7 @@ const EnglishSeries = () => {
   
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/genre").then((res) => {
+    axios.get("http://89.116.110.212:5000/api/genre").then((res) => {
       setGenreData(res.data);
     }).catch((error) => {
       console.error("Error fetching genre data:", error);

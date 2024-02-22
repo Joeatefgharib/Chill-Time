@@ -17,7 +17,7 @@ const WatchMoviePage = () => {
   const [movieData, setMovieData] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/movies/${id}`)
+      .get(`http://89.116.110.212:5000/api/movies/${id}`)
       .then((response) => {
         console.log(response.data);
         setMovieData(response.data);
@@ -30,7 +30,7 @@ const WatchMoviePage = () => {
   const [movie, setMovie] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/movies/${id}/qualities/${type}`)
+      .get(`http://89.116.110.212:5000/api/movies/${id}/qualities/${type}`)
       .then((response) => {
         console.log(response.data);
         setMovie(response.data);

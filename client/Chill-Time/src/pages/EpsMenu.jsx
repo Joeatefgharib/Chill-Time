@@ -19,7 +19,7 @@ const EpsMenu = () => {
   const [seriesData, setSeriesData] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/series/${id}`)
+      .get(`http://89.116.110.212:5000/api/series/${id}`)
       .then((response) => {
         console.log(response.data);
         setSeriesData(response.data);
@@ -33,7 +33,7 @@ const EpsMenu = () => {
   useEffect(() => {
     if (activeSeason) {
       axios
-        .get(`http://localhost:5000/api/series/${id}/${activeSeason}/episodes`)
+        .get(`http://89.116.110.212:5000/api/series/${id}/${activeSeason}/episodes`)
         .then((response) => {
           console.log(response.data);
           setEpisodesData(response.data);
@@ -47,7 +47,7 @@ const EpsMenu = () => {
   const [seasonData, setSeasonData] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/series/${id}/seasons`)
+      .get(`http://89.116.110.212:5000/api/series/${id}/seasons`)
       .then((response) => {
         console.log(response.data);
         setSeasonData(response.data);

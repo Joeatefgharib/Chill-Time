@@ -10,11 +10,11 @@ const ArabicMovies = () => {
   const [selectedGenre, setSelectedGenre] = useState("allGenres");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/lang/عربي").then((res) => {
+    axios.get("http://89.116.110.212:5000/api/lang/عربي").then((res) => {
       const result = res.data;
       const moviesIds = result.movies;
       const promises = moviesIds.map((id) =>
-        axios.get(`http://localhost:5000/api/movies/${id}`)
+        axios.get(`http://89.116.110.212:5000/api/movies/${id}`)
       );
   
       Promise.all(promises)
@@ -34,7 +34,7 @@ const ArabicMovies = () => {
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/genre").then((res) => {
+    axios.get("http://89.116.110.212:5000/api/genre").then((res) => {
       setGenreData(res.data);
     });
   }, []);

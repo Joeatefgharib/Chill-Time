@@ -18,19 +18,19 @@ const Series = () => {
   const [trendSeries, setTrendSeries] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/series").then((res) => {
+    axios.get("http://89.116.110.212:5000/api/series").then((res) => {
       setSeriesData(res.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/genre").then((res) => {
+    axios.get("http://89.116.110.212:5000/api/genre").then((res) => {
       setGenreData(res.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/lang").then((res) => {
+    axios.get("http://89.116.110.212:5000/api/lang").then((res) => {
       setLangData(res.data);
     });
   }, []);
@@ -38,11 +38,11 @@ const Series = () => {
   useEffect(() => {
     if (selectedGenre !== "allGenres") {
       axios
-        .get(`http://localhost:5000/api/genre/${selectedGenre}/series`)
+        .get(`http://89.116.110.212:5000/api/genre/${selectedGenre}/series`)
         .then((res) => {
           const seriesIds = res.data;
           const promises = seriesIds.map((id) =>
-            axios.get(`http://localhost:5000/api/series/${id}`)
+            axios.get(`http://89.116.110.212:5000/api/series/${id}`)
           );
           Promise.all(promises)
             .then((responses) => {
@@ -58,7 +58,7 @@ const Series = () => {
         });
     } else {
       axios
-        .get("http://localhost:5000/api/series")
+        .get("http://89.116.110.212:5000/api/series")
         .then((res) => {
           setSeriesData(res.data);
         })
@@ -71,11 +71,11 @@ const Series = () => {
   useEffect(() => {
     if (selectedLang !== "allLangs") {
       axios
-        .get(`http://localhost:5000/api/lang/${selectedLang}/series`)
+        .get(`http://89.116.110.212:5000/api/lang/${selectedLang}/series`)
         .then((res) => {
           const movieIds = res.data;
           const promises = movieIds.map((id) =>
-            axios.get(`http://localhost:5000/api/series/${id}`)
+            axios.get(`http://89.116.110.212:5000/api/series/${id}`)
           );
           Promise.all(promises)
             .then((responses) => {
@@ -92,7 +92,7 @@ const Series = () => {
     } else {
       // Fetch all movies if "allLangs" is selected
       axios
-        .get("http://localhost:5000/api/series")
+        .get("http://89.116.110.212:5000/api/series")
         .then((res) => {
           setSeriesData(res.data);
         })
@@ -104,12 +104,12 @@ const Series = () => {
  
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/trendseries/series")
+      .get("http://89.116.110.212:5000/api/trendseries/series")
       .then(async (res) => {
         const trendSeriesIds = res.data;
         const seriesDetailsPromises = trendSeriesIds.map(async (seriesId) => {
           const seriesDetails = await axios.get(
-            `http://localhost:5000/api/series/${seriesId}`
+            `http://89.116.110.212:5000/api/series/${seriesId}`
           );
           return seriesDetails.data;
         });

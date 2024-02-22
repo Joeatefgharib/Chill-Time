@@ -27,8 +27,7 @@ const ActorPage = () => {
                     console.log(movieResponse.data)
                     return movieResponse.data;
             }));
-                setMovieData(moviesData); // Update movieData state with movie details
-            })
+                setMovieData(moviesData); // Update movieData state with movie deta            })
             axios.get(`http://89.116.110.212:5000/api/actors/${id}/relatedSeries`)
             .then(async response => {
                 const seriesData = await Promise.all(response.data.map(async SeriesId => {
