@@ -4,6 +4,7 @@ import ActorCard from '../components/ActorCard.jsx';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import {Helmet} from 'react-helmet-async'
 import styled from 'styled-components';
 import MovieDownloadbtn from "../components/MovieDownloadBtn.jsx";
 
@@ -83,9 +84,13 @@ const MoviePage = () => {
 
     return(
         <>
+        <Helmet>
+                <title>مشاهدة فيلم {`${movieData.title}`} بجودة عاليه على Chill Time</title>
+                <meta name="description" content={`${movieData.description}`}/>
+        </Helmet>
             <Header />
             <StyledContainer  >
-                <div id={'Btns'} className="lg:inline-grid lg:gap-3 lg:top-[225px] lg:left-[100px]  absolute top-[480px] left-[50px]  ">
+                <div id={'Btns'} className="  absolute lg:grid lg:gap-3 lg:top-[225px] lg:left-[100px] lg:mt-0 mt-[100px] left-[50px] ">
                     <MovieWatchBtn  />
                     <MovieDownloadbtn />
                 </div>

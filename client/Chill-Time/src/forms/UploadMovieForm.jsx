@@ -73,7 +73,7 @@ const UploadMovieForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/addmovie",
+        "http://89.116.110.212:5000/addmovie",
         formData,
         {
           headers: {

@@ -4,6 +4,7 @@ import SeriesWatchBtn from "../components/SeriesWatchBtn.jsx";
 import ActorCard from '../components/ActorCard.jsx';
 import { useState, useEffect } from 'react';
 import axios from "axios";
+import {Helmet} from 'react-helmet-async'
 import styled from 'styled-components';
 import SeriesDownloadBtn from "../components/SeriesDownloadBtn.jsx";
 
@@ -75,9 +76,14 @@ const SeriesPage = () => {
 
     return (
         <>
+        <Helmet>
+                <title>مشاهدة مسلسل {`${seriesData.title}`} بجودة عالية على Chill Time</title>
+                <meta name="description" content={`${seriesData.description}`}/>
+        </Helmet>
+
             <Header />
             <StyledContainer>
-                <div className=" absolute lg:grid lg:gap-3 lg:top-[225px] lg:left-[100px] top-[500px] left-[100px]">
+                <div className=" absolute lg:grid lg:gap-3 lg:top-[225px] lg:left-[100px] lg:mt-0 mt-[100px] left-[90px]">
                     <SeriesWatchBtn />
                     <SeriesDownloadBtn />
                 </div>

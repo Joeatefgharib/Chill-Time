@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const Card = ({type, id, poster, title, genre}) => {
 
     return(
-        <div id='bx' className=' relative w-[180px] h-[290px] m-[10px] rounded-[20px] lg:mb-[80px] mb-30 ' key={id}>
+        <div id='bx' className=' relative w-[180px] h-[290px] m-[10px] rounded-[20px] lg:mb-[80px] mb-[60px] ' key={id}>
             <Link to={`/${type}/${id}`}>
                     <img className=' w-full h-full rounded-[20px] ' alt={`${id}`} src={`${poster}`}/>
                 <div id='details' className=' absolute w-full h-[25%] z-[1]'>

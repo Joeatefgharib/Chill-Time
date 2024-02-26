@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Home Page -->
+    <url>
+        <loc>http://chiltime.tv/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Movies -->
+    <url>
+        <loc>http://chiltime.tv/movies</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Series -->
+    <url>
+        <loc>http://chiltime.tv/series</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Dynamic Movie Pages -->
+    <url>
+        <loc>http://chiltime.tv/movie/*/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Dynamic Watch Movie Pages -->
+    <url>
+        <loc>http://chiltime.tv/movie/*/watch/*/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Arabic Movies -->
+    <url>
+        <loc>http://chiltime.tv/movies/عربي</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- English Movies -->
+    <url>
+        <loc>http://chiltime.tv/movies/اجنبي</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Turkish Movies -->
+    <url>
+        <loc>http://chiltime.tv/movies/تركي</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Dynamic Series Pages -->
+    <url>
+        <loc>http://chiltime.tv/series/*/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Dynamic Season Episodes Menu -->
+    <url>
+        <loc>http://chiltime.tv/series/*/*/episodes/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Dynamic Watch Series Pages -->
+    <url>
+        <loc>http://chiltime.tv/series/*/*/*/watch/*/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Trending Series -->
+    <url>
+        <loc>http://chiltime.tv/series/trending</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Arabic Series -->
+    <url>
+        <loc>http://chiltime.tv/series/عربي</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- English Series -->
+    <url>
+        <loc>http://chiltime.tv/series/اجنبي</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Turkish Series -->
+    <url>
+        <loc>http://chiltime.tv/series/تركي</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Dynamic Actors Page -->
+    <url>
+        <loc>http://chiltime.tv/actors/*/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Dynamic Search Page -->
+    <url>
+        <loc>http://chiltime.tv/search/*/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+</urlset>
+

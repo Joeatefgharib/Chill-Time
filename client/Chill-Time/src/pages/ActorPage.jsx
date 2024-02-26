@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import ActorImgComponent from '../components/ActorImgComponent.jsx'
 import styled from 'styled-components'
 import axios from 'axios'
+import {Helmet} from 'react-helmet-async'
 import Card from '../components/Card.jsx'
 
 const ActorPage = () => {
@@ -66,6 +67,10 @@ const ActorPage = () => {
 
   return (
     <>
+	<Helmet>
+		<title>{`${actorData.name}`}</title>
+		<meta name="description" content={`${actorData.description}`}/>
+	</Helmet>
         <Header />
         <StyledContainer>
             <div className=' lg:flex grid'>

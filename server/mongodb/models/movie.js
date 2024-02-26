@@ -15,9 +15,9 @@ const movieSchema = new mongoose.Schema({
   poster: { type: String, required: true },
   qualities: [
     {
-      type: { type: String, required: true }, 
-      link: { type: String, required: true },
-      download: { type: String, required: true} 
+      type: { type: String, required: false }, 
+      link: { type: String, required: false },
+      download: { type: String, required: false} 
     }
   ],
   actors: [{ type: String, ref: "Actor" }], // Reference to actors

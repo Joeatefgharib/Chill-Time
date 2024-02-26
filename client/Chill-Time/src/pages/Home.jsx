@@ -98,7 +98,12 @@ const Home = () => {
         id="movies"
         className="lg:grid lg:grid-cols-8 lg:mt-[30px] lg:mr-[30px] lg:mb-[30px] lg:ml-[30px] lg:p-0 grid grid-cols-2 items-center pt-8 pr-1 pl-1"
         spaceBetween={10}
-        slidesPerView={8} // Display 8 cards per view
+        slidesPerView={2}
+	breakpoints={{
+		768: {
+			slidesPerView: 8
+		}
+	}}
         pagination={{ clickable: true }}
       >
         {movieData
@@ -136,7 +141,12 @@ const Home = () => {
         id="series"
         className="lg:grid lg:grid-cols-8 lg:mt-[30px] lg:mr-[30px] lg:mb-[30px] lg:ml-[30px] lg:p-0 grid grid-cols-2 items-center pt-8 pr-1 pl-1"
         spaceBetween={10}
-        slidesPerView={8} // Display 8 cards per view
+        slidesPerView={2}
+	breakpoints={{
+		768:{
+			slidesPerView: 8
+		}
+	}}
         pagination={{ clickable: true }}
       >
         {seriesData

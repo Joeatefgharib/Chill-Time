@@ -39,7 +39,7 @@ const MovieDownloadBtn = () => {
   const handleDownloadNow = () => {
     setLoading(true);
     axios
-      .get(`http://localhost:5000/api/movies/${id}/qualities`)
+      .get(`http://89.116.110.212:5000/api/movies/${id}/qualities`)
       .then((response) => {
         const fetchedQualities = response.data;
         if (fetchedQualities.length > 0) {
