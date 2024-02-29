@@ -87,6 +87,7 @@ const MoviePage = () => {
         <Helmet>
                 <title>مشاهدة فيلم {`${movieData.title}`} بجودة عاليه على Chill Time</title>
                 <meta name="description" content={`${movieData.description}`}/>
+		<meta name="keywords" content={`تحميل ومشاهدة فيلم ${movieData.title`} مترجم } />
         </Helmet>
             <Header />
             <StyledContainer  >
@@ -95,7 +96,7 @@ const MoviePage = () => {
                     <MovieDownloadbtn />
                 </div>
                 <div id={'movieContent'} className="lg:flex lg:items-center lg:justify-between grid gap-10 ">
-                    <img id={'img'} className="w-[240px] h-[355px] rounded-2xl lg:mr-[100px] lg:mt-0 mr-[75px] mt-[100px]" alt={`${movieData._id}`} src={movieData.poster} />
+                    <img id={'img'} className="w-[240px] h-[355px] rounded-2xl lg:mr-[100px] lg:mt-0 mr-[75px] mt-[100px]" alt={movieData._id} src={movieData.poster} />
                     <div id={'infoContent'} className=" h-[360px] mr-[50px] pt-8">
                      <h1 className=" lg:text-4xl text-3xl">{movieData.title}</h1>
                         <p className=" text-gray-500 mt-[10px]">{movieData.duration}</p>

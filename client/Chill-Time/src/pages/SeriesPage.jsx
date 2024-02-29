@@ -78,6 +78,7 @@ const SeriesPage = () => {
         <>
         <Helmet>
                 <title>مشاهدة مسلسل {`${seriesData.title}`} بجودة عالية على Chill Time</title>
+		<meta name="keywords" content={`تحميل ومشاهدة مسلسل ${seriesData.title} مترجم`} />
                 <meta name="description" content={`${seriesData.description}`}/>
         </Helmet>
 
