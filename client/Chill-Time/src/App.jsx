@@ -17,7 +17,7 @@ import TurkishMovies from './pages/TurkishMovies.jsx';
 import ArabicMovies from './pages/ArabicMovies.jsx';
 import EnglishMovies from './pages/EnglishMovies.jsx';
 import AdminPage from './pages/AdminPage.jsx';
-import DMCA from './pages/DMCA.JSX';
+import DMCA from './pages/DMCA.jsx';
 
 function App() {
 
