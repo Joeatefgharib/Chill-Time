@@ -17,6 +17,7 @@ import TurkishMovies from './pages/TurkishMovies.jsx';
 import ArabicMovies from './pages/ArabicMovies.jsx';
 import EnglishMovies from './pages/EnglishMovies.jsx';
 import AdminPage from './pages/AdminPage.jsx';
+import DMCA from './pages/DMCA.JSX';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
       <Routes>
           <Route path={'/'} element={<Home/>}/>
           <Route path={'admin'} element={<AdminPage/>}/>
+          <Route path={'DMCA'} element={<DMCA />}/>
           <Route path={'movies'} element={<Movies />} />
           <Route path={'series'} element={<Series />} />
           <Route path={'movie/:id'} element={<MoviePage />} />

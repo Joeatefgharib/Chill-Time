@@ -17,6 +17,12 @@ const navListData = [
         name: "مسلسلات",
         active: false,
     },
+    {
+        id: 4,
+        link: '/DMCA',
+        name: "DMCA",
+        active: false,
+    },
 ]
 
 export default navListData

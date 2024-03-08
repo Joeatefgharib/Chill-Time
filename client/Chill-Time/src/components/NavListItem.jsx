@@ -5,13 +5,14 @@ const NavListItem = ({ nav }) => {
   const [showLanguages, setShowLanguages] = useState(false);
 
   const handleMouseEnter = () => {
-    if (nav.id !== 1) {
+    // Only show dropdown for IDs other than 1 and 4
+    if (nav.id !== 1 && nav.id !== 4) {
       setShowLanguages(true);
     }
   };
 
   const handleMouseLeave = () => {
-    if (nav.id !== 1) {
+    if (nav.id !== 1 && nav.id !== 4) {
       setShowLanguages(false);
     }
   };
@@ -38,7 +39,8 @@ const NavListItem = ({ nav }) => {
           <Link className="block py-1 hover:text-red-600 duration-[.5s]" to="/series/تركي">تركي</Link>
         </div>
       )}
-      {(nav.id !== 3 && nav.id !== 1 && showLanguages) && (
+      {/* Only show dropdown for IDs other than 1 and 4 */}
+      {(nav.id !== 1 && nav.id !== 4 && nav.id !== 3 && showLanguages) && (
         <div
           className="absolute top-full bg-transparent border border-gray-300 rounded shadow p-1 "
           onMouseEnter={handleMouseEnter}
